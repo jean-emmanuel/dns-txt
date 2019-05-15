@@ -1,8 +1,10 @@
 'use strict'
 
+var isModern = Buffer.from && Buffer.from !== Uint8Array.from
+
 var bindexOf = require('buffer-indexof')
 
-var equalSign = new Buffer('=')
+var equalSign = isModern ? Buffer.from('=') : new Buffer('=')
 
 module.exports = function (opts) {
   var binary = opts ? opts.binary : false
@@ -11,7 +13,7 @@ module.exports = function (opts) {
   that.encode = function (data, buf, offset) {
     if (!data) data = {}
     if (!offset) offset = 0
-    if (!buf) buf = new Buffer(that.encodingLength(data) + offset)
+    if (!buf) buf = isModern ? Buffer.from(that.encodingLength(data) + offset) : new Buffer(that.encodingLength(data) + offset)
 
     var oldOffset = offset
     var keys = Object.keys(data)
