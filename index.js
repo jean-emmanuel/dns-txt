@@ -13,7 +13,7 @@ module.exports = function (opts) {
   that.encode = function (data, buf, offset) {
     if (!data) data = {}
     if (!offset) offset = 0
-    if (!buf) buf = isModern ? Buffer.from(that.encodingLength(data) + offset) : new Buffer(that.encodingLength(data) + offset)
+    if (!buf) buf = isModern ? Buffer.alloc(that.encodingLength(data) + offset) : new Buffer(that.encodingLength(data) + offset)
 
     var oldOffset = offset
     var keys = Object.keys(data)
